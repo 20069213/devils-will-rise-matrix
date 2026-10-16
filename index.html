@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#001008">
+<title>DEVILS WILL RISE | Abdo Saad</title>
+
+<style>
+:root{
+ --green:#00ff83;
+ --green2:#00c968;
+ --bg:#020805;
+ --panel:#04130c;
+ --line:#006b3b;
+ --muted:#9bb9aa;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;background:var(--bg);color:#e5fff0;
+ font-family:Tahoma,Arial,sans-serif;overflow-x:hidden
+}
+#matrix{
+ position:fixed;inset:0;width:100%;height:100%;
+ opacity:.17;z-index:-2;pointer-events:none
+}
+body:after{
+ content:"";position:fixed;inset:0;pointer-events:none;
+ background:repeating-linear-gradient(
+  transparent 0 3px,rgba(0,255,131,.025) 4px
+ );z-index:-1
+}
+.hero{
+ text-align:center;padding:24px 12px 20px;
+ background:linear-gradient(#00200d,#020805);
+ border-bottom:1px solid var(--green)
+}
+.hero h1{
+ color:var(--green);font-size:clamp(25px,4vw,45px);
+ margin:5px;text-shadow:0 0 10px #00ff83,0 0 25px #00a84e
+}
+.subtitle{letter-spacing:2px;font-size:13px;color:#c5ffe0}
+.developer{margin-top:12px;color:#9effc9;font-size:13px}
+nav{
+ display:flex;justify-content:center;flex-wrap:wrap;gap:8px;
+ background:#020a06;border-bottom:1px solid var(--line);
+ padding:10px;position:sticky;top:0;z-index:5
+}
+nav a{
+ color:#c4e9d3;text-decoration:none;padding:10px 13px;
+ border-radius:6px;font-size:13px
+}
+nav a:hover{background:#00391e;color:var(--green)}
+.wrap{max-width:1250px;margin:20px auto;padding:0 14px}
+.grid{
+ display:grid;grid-template-columns:1fr 1.1fr 1fr;
+ gap:14px;align-items:start
+}
+.column{display:grid;gap:14px;min-width:0}
+.card{
+ min-width:0;background:linear-gradient(145deg,#04160d,#010805);
+ border:1px solid var(--line);border-radius:13px;padding:16px;
+ box-shadow:0 0 14px #001d0d,inset 0 0 15px #00210e
+}
+.card h2{
+ font-size:16px;margin:0 0 14px;padding-bottom:12px;
+ border-bottom:1px solid #064b2b;color:#e6fff0;
+ display:flex;gap:9px;align-items:center
+}
+.icon{font-size:20px;color:var(--green)}
+.row{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:8px;padding:10px 0;border-bottom:1px solid #082b19;
+ font-size:13px
+}
+.row:last-child{border-bottom:0}
+.green{color:var(--green)}
+.muted{color:var(--muted);font-size:12px;line-height:1.8}
+.pill{color:var(--green);white-space:nowrap}
+button,.button{
+ border:1px solid #00e879;
+ background:linear-gradient(#00df6e,#00a94e);
+ color:#001d0b;font-weight:bold;border-radius:8px;
+ padding:13px 12px;width:100%;font-size:14px;
+ cursor:pointer;display:block;text-align:center;
+ text-decoration:none;margin-top:10px;
+ box-shadow:0 0 14px #00a84e44
+}
+button:hover,.button:hover{filter:brightness(1.12)}
+input,textarea{
+ width:100%;background:#010805;border:1px solid #08643a;
+ border-radius:8px;padding:12px;color:#eafff2;
+ font:14px Tahoma,Arial;margin-top:8px;outline:none
+}
+input:focus{border-color:var(--green)}
+.output{
+ background:#010805;border:1px solid #07552f;border-radius:8px;
+ padding:12px;color:var(--green);overflow-wrap:anywhere;
+ text-align:center;font-weight:bold;margin-top:10px
+}
+.console{
+ background:#010603;border:1px solid #07552f;border-radius:9px;
+ padding:13px;color:var(--green);font:13px/1.9 monospace;
+ min-height:245px;direction:ltr;text-align:left;overflow:hidden
+}
+.console .dim{color:#5cae80}
+.cursor{
+ display:inline-block;width:7px;height:14px;background:var(--green);
+ vertical-align:middle;animation:blink 1s steps(2) infinite
+}
+@keyframes blink{50%{opacity:0}}
+.notice{
+ border:1px solid #087341;border-radius:9px;padding:12px;
+ text-align:center;color:#a6ffd0;font-size:12px;
+ line-height:1.8;margin-top:14px
+}
+.chatbox{
+ min-height:95px;border:1px solid #07552f;border-radius:10px;
+ padding:12px;background:#010805
+}
+.bubble{
+ background:#032517;border:1px solid #087341;border-radius:12px;
+ padding:11px;font-size:12px;line-height:1.8;max-width:95%;
+ overflow-wrap:anywhere
+}
+.chatform{display:flex;gap:7px;margin-top:10px}
+.chatform input{margin:0;min-width:0}
+.chatform button{width:48px;flex-shrink:0;margin:0;padding:8px}
+.device{
+ border:1px solid #07552f;border-radius:10px;padding:13px;
+ margin-top:9px;display:flex;align-items:center;
+ justify-content:space-between;gap:10px
+}
+.device strong{font-size:13px}
+.device small{display:block;color:var(--green);margin-top:7px}
+.filepick{
+ display:block;border:1px solid #087341;padding:12px;
+ border-radius:8px;text-align:center;color:#b8ffd4;
+ cursor:pointer;margin-top:10px
+}
+.filepick input{display:none}
+footer{
+ max-width:1250px;margin:24px auto 0;padding:24px 14px 90px;
+ text-align:center;color:#7ba991;font-size:12px;
+ border-top:1px solid #063820
+}
+.footer-title{
+ font-size:22px;font-weight:bold;color:var(--green);
+ text-shadow:0 0 12px #00ff83;margin-bottom:6px
+}
+.bottom{display:none}
+
+@media(max-width:850px){
+ .grid{grid-template-columns:1fr 1fr}
+ .center-col{grid-column:1/-1;grid-row:1}
+ .left-col{grid-column:1}
+ .right-col{grid-column:2}
+}
+@media(max-width:560px){
+ .hero{padding:21px 10px}
+ .hero h1{font-size:26px}
+ .subtitle{font-size:10px;letter-spacing:1px}
+ .wrap{padding:0 10px;margin:12px auto}
+ .grid{grid-template-columns:1fr;gap:12px}
+ .center-col,.left-col,.right-col{grid-column:auto;grid-row:auto}
+ .card{padding:14px}
+ nav{position:static}
+ nav a{padding:9px;font-size:12px}
+ .console{min-height:200px}
+ .bottom{
+  display:flex;position:fixed;bottom:0;left:0;right:0;
+  z-index:10;background:#020a06;border-top:1px solid var(--line);
+  justify-content:space-around;padding:8px 2px
+ }
+ .bottom a{
+  color:#9bc9ae;text-decoration:none;font-size:11px;
+  text-align:center;padding:5px
+ }
+ .bottom a span{display:block;font-size:18px;margin-bottom:3px}
+ .bottom a:hover{color:var(--green)}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<header class="hero" id="home">
+ <h1>☠ DEVILS WILL RISE ☠</h1>
+ <div class="subtitle">CYBER SECURITY CONTROL PANEL</div>
+ <div class="developer">━━━ Developer: Abdo Saad ━━━</div>
+</header>
+
+<nav>
+ <a href="#home">⌂ الرئيسية</a>
+ <a href="#messages">▤ الرسائل</a>
+ <a href="#devices">▣ الأجهزة</a>
+ <a href="#files">▱ الملفات</a>
+ <a href="#settings">⚙ الإعدادات</a>
+</nav>
+
+<main class="wrap">
+<div class="grid">
+
+<!-- العمود الأول -->
+<div class="column left-col">
+
+ <section class="card">
+  <h2><span class="icon">◉</span> حالة النظام</h2>
+
+  <div class="row"><span>♧ حالة الموقع</span><b class="pill">نشط ●</b></div>
+  <div class="row"><span>◷ وقت التشغيل</span><b class="green" id="uptime">00:00:00</b></div>
+  <div class="row"><span>◉ المتصفح</span><span id="browserShort">متصفح الويب</span></div>
+  <div class="row"><span>▯ الجهاز</span><span id="deviceShort">جهازك الحالي</span></div>
+  <div class="row"><span>⌑ الاتصال</span><b class="pill" id="connection">متصل ●</b></div>
+
+  <div class="notice">
+   <b class="green">الأمان أولًا</b><br>
+   لا يتم إرسال بيانات إلى خادم في هذه النسخة.
+  </div>
+ </section>
+
+ <section class="card" id="messages">
+  <h2><span class="icon">▣</span> الرسائل</h2>
+
+  <div class="chatbox" id="chatbox">
+   <div class="bubble">
+    👋 مرحبًا بك في <b class="green">DEVILS WILL RISE</b><br>
+    يمكنك تجربة الرسائل داخل الصفحة.
+   </div>
+  </div>
+
+  <div class="chatform">
+   <input id="chatInput" placeholder="اكتب رسالتك هنا..." maxlength="300">
+   <button onclick="sendMessage()" aria-label="إرسال">➤</button>
+  </div>
+  <p class="muted">الرسائل تجريبية ولا تصل لأجهزة أخرى.</p>
+ </section>
+
+ <section class="card" id="files">
+  <h2><span class="icon">▰</span> الملفات</h2>
+  <p class="muted">اختر ملفًا لعرض اسمه وحجمه على جهازك دون رفعه.</p>
+
+  <label class="filepick">
+   ☁ اختر ملفًا
+   <input type="file" id="fileInput" onchange="showFile()">
+  </label>
+  <p class="muted" id="fileInfo">لم يتم اختيار ملف.</p>
+ </section>
+
+</div>
+
+<!-- العمود الأوسط -->
+<div class="column center-col">
+
+ <section class="card">
+  <h2><span class="icon">◉</span> جلسة الاتصال</h2>
+  <p class="muted" style="text-align:center">اضغط لإنشاء رمز جلسة تجريبي جديد.</p>
+
+  <button onclick="createSession()">♙ إنشاء رمز جلسة</button>
+
+  <p class="muted green" style="text-align:center;margin-top:14px">
+   رمز الجلسة الحالي:
+  </p>
+
+  <div class="output" id="output">لم يتم إنشاء رمز بعد</div>
+
+  <button onclick="copyCode()" style="background:#032517;color:#00ff83">
+   ▢ نسخ الرمز
+  </button>
+
+  <p class="muted" style="text-align:center">
+   الرمز تجريبي ولا ينشئ اتصالًا حقيقيًا.
+  </p>
+ </section>
+
+ <section class="card">
+  <h2><span class="icon">↗</span> الانضمام إلى جلسة</h2>
+  <p class="muted">أدخل رمز الجلسة للتحقق منه داخل الصفحة.</p>
+
+  <input id="sessionCode" placeholder="أدخل رمز الجلسة هنا" maxlength="20">
+
+  <button onclick="joinSession()">⇥ التحقق من الرمز</button>
+
+  <p id="joinStatus" class="muted green" aria-live="polite"></p>
+ </section>
+
+ <section class="card" id="devices">
+  <h2><span class="icon">▣</span> الأجهزة المتصلة</h2>
+
+  <div class="device">
+   <div>
+    <strong>الجهاز الرئيسي (أنت)</strong>
+    <small>● نشط على هذه الصفحة</small>
+   </div>
+   <span class="icon">▯</span>
+  </div>
+
+  <div class="device">
+   <div>
+    <strong>أجهزة أخرى</strong>
+    <small>لا توجد أجهزة مرتبطة حاليًا</small>
+   </div>
+   <span class="icon">☁</span>
+  </div>
+
+  <p class="muted">
+   الربط بين أجهزة مختلفة يحتاج خادمًا وموافقة واضحة من كل مستخدم.
+  </p>
+ </section>
+
+</div>
+
+<!-- العمود الثالث -->
+<div class="column right-col">
+
+ <section class="card">
+  <h2><span class="icon">›_</span> نافذة العمليات</h2>
+
+  <div class="console" id="console">
+   <div>:: DEVILS WILL RISE ::</div>
+   <div>&gt; Initializing interface...</div>
+   <div>&gt; Checking local status...</div>
+   <div>&gt; System online ✓</div>
+   <div>&gt; Ready for demo...</div>
+   <br>
+   <div class="dim">--------------------------------</div>
+   <div>&gt; "المستقبل يبدأ من فكرة"</div>
+   <div>&gt; Abdo Saad</div>
+   <br>
+   <span class="cursor"></span>
+  </div>
+ </section>
+
+ <section class="card">
+  <h2><span class="icon">▱</span> معلومات المتصفح</h2>
+
+  <div class="row"><span>المتصفح</span><span class="green" id="browserFull">—</span></div>
+  <div class="row"><span>النظام</span><span class="green" id="osFull">—</span></div>
+  <div class="row"><span>لغة المتصفح</span><span class="green" id="langFull">—</span></div>
+  <div class="row"><span>حالة الشبكة</span><span class="green" id="network">—</span></div>
+
+  <p class="muted">المعلومات المعروضة متاحة للصفحة من المتصفح فقط.</p>
+ </section>
+
+ <section class="card" id="settings">
+  <h2><span class="icon">➤</span> التواصل مع المطور</h2>
+  <p class="muted">للاستفسار أو التواصل، اضغط على الزر التالي.</p>
+
+  <a class="button"
+     href="https://wa.me/201223862890"
+     target="_blank" rel="noopener noreferrer">
+   ☏ تواصل مع المطور واتساب
+  </a>
+
+  <a class="button"
+     href="https://youtube.com/@abdosaad-b3f"
+     target="_blank" rel="noopener noreferrer"
+     style="background:#160606;color:#ff7777;border-color:#a90000">
+   ▶ قناتي على يوتيوب
+  </a>
+
+  <p class="muted" style="text-align:center">DEVILS WILL RISE — Abdo Saad</p>
+ </section>
+
+</div>
+</div>
+</main>
+
+<footer>
+ <div class="footer-title">DEVILS WILL RISE</div>
+ <div>— Abdo Saad —</div>
+ <p>© 2026 جميع الحقوق محفوظة</p>
+ <p>موقع تعليمي تجريبي؛ لا ينفّذ اختراقًا أو تحكمًا بأجهزة أخرى.</p>
+</footer>
+
+<div class="bottom">
+ <a href="#home"><span>⌂</span>الرئيسية</a>
+ <a href="#messages"><span>▤</span>الرسائل</a>
+ <a href="#devices"><span>▣</span>الأجهزة</a>
+ <a href="#files"><span>▱</span>الملفات</a>
+ <a href="#settings"><span>⚙</span>الإعدادات</a>
+</div>
+
+<script>
+let currentCode="";
+const startedAt=Date.now();
+
+function createSession(){
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+ const random=new Uint32Array(9);
+ crypto.getRandomValues(random);
+
+ const parts=Array.from(random).map(n=>chars[n%chars.length]);
+ currentCode=parts.slice(0,4).join("")+"-"+
+             parts.slice(4,7).join("")+"-"+
+             parts.slice(7,9).join("");
+
+ document.getElementById("output").textContent=currentCode;
+ document.getElementById("sessionCode").value="";
+ document.getElementById("joinStatus").textContent="تم إنشاء رمز تجريبي جديد.";
+ logLine("> Demo session generated.");
+}
+
+function joinSession(){
+ const entered=document.getElementById("sessionCode").value.trim().toUpperCase();
+ const status=document.getElementById("joinStatus");
+
+ if(!entered){
+  status.textContent="اكتب رمز الجلسة أولًا.";
+  return;
+ }
+
+ if(currentCode && entered===currentCode){
+  status.textContent="تم التحقق محليًا فقط؛ الاتصال الحقيقي غير مفعّل.";
+  logLine("> Local code verified. No remote connection.");
+ }else{
+  status.textContent="الرمز غير صحيح أو لم يتم إنشاؤه في هذه الصفحة.";
+  logLine("> Code check failed.");
+ }
+}
+
+async function copyCode(){
+ if(!currentCode){
+  document.getElementById("joinStatus").textContent="أنشئ رمز جلسة أولًا.";
+  return;
+ }
+ try{
+  await navigator.clipboard.writeText(currentCode);
+  document.getElementById("joinStatus").textContent="تم نسخ الرمز.";
+ }catch(e){
+  document.getElementById("joinStatus").textContent="انسخ الرمز يدويًا: "+currentCode;
+ }
+}
+
+function sendMessage(){
+ const input=document.getElementById("chatInput");
+ const text=input.value.trim();
+ if(!text)return;
+
+ const bubble=document.createElement("div");
+ bubble.className="bubble";
+ bubble.style.margin="10px 0 0 auto";
+ bubble.textContent=text;
+
+ document.getElementById("chatbox").appendChild(bubble);
+ input.value="";
+ logLine("> Local demo message added.");
+}
+
+document.getElementById("chatInput").addEventListener("keydown",e=>{
+ if(e.key==="Enter")sendMessage();
+});
+
+function showFile(){
+ const f=document.getElementById("fileInput").files[0];
+ document.getElementById("fileInfo").textContent=f
+  ? "الملف: "+f.name+" — "+(f.size/1024).toFixed(1)+" KB. لم يتم رفعه."
+  : "لم يتم اختيار ملف.";
+}
+
+function logLine(text){
+ const consoleBox=document.getElementById("console");
+ const line=document.createElement("div");
+ line.textContent=text;
+ consoleBox.appendChild(line);
+ while(consoleBox.children.length>20)consoleBox.removeChild(consoleBox.children[0]);
+}
+
+function detectBrowser(){
+ const ua=navigator.userAgent;
+ if(/Edg/i.test(ua))return "Microsoft Edge";
+ if(/Chrome/i.test(ua))return "Chrome";
+ if(/Firefox/i.test(ua))return "Firefox";
+ if(/Safari/i.test(ua))return "Safari";
+ return "متصفح الويب";
+}
+
+function detectOS(){
+ const ua=navigator.userAgent;
+ if(/Android/i.test(ua))return "Android";
+ if(/iPhone|iPad/i.test(ua))return "iOS";
+ if(/Windows/i.test(ua))return "Windows";
+ if(/Mac OS/i.test(ua))return "macOS";
+ return "نظام غير معروف";
+}
+
+const browser=detectBrowser();
+const os=detectOS();
+
+document.getElementById("browserShort").textContent=browser;
+document.getElementById("deviceShort").textContent=os;
+document.getElementById("browserFull").textContent=browser;
+document.getElementById("osFull").textContent=os;
+document.getElementById("langFull").textContent=navigator.language||"—";
+
+function updateNetwork(){
+ const online=navigator.onLine;
+ document.getElementById("network").textContent=online?"متصل":"غير متصل";
+ document.getElementById("connection").textContent=online?"متصل ●":"غير متصل";
+}
+
+updateNetwork();
+window.addEventListener("online",updateNetwork);
+window.addEventListener("offline",updateNetwork);
+
+setInterval(()=>{
+ const seconds=Math.floor((Date.now()-startedAt)/1000);
+ const parts=[
+  Math.floor(seconds/3600),
+  Math.floor((seconds%3600)/60),
+  seconds%60
+ ];
+ document.getElementById("uptime").textContent=
+  parts.map(n=>String(n).padStart(2,"0")).join(":");
+},1000);
+
+/* خلفية Matrix */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+let columns=[];
+const fontSize=13;
+
+function resizeMatrix(){
+ canvas.width=window.innerWidth;
+ canvas.height=window.innerHeight;
+ columns=Array(Math.ceil(canvas.width/fontSize)).fill(1);
+}
+
+resizeMatrix();
+window.addEventListener("resize",resizeMatrix);
+
+setInterval(()=>{
+ ctx.fillStyle="rgba(0,8,4,0.09)";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.fillStyle="#00ff83";
+ ctx.font=fontSize+"px monospace";
+
+ for(let i=0;i<columns.length;i++){
+  const char=String.fromCharCode(0x30A0+Math.random()*96);
+  ctx.fillText(char,i*fontSize,columns[i]*fontSize);
+
+  if(columns[i]*fontSize>canvas.height&&Math.random()>.975){
+   columns[i]=0;
+  }
+  columns[i]++;
+ }
+},65);
+</script>
+</body>
+  </html>
